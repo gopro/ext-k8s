@@ -23,12 +23,12 @@ package v1beta1
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import _ "github.com/ericchiang/k8s/apis/core/v1"
-import _ "github.com/ericchiang/k8s/apis/apiextensions/v1beta1"
-import k8s_io_apimachinery_pkg_apis_meta_v1 "github.com/ericchiang/k8s/apis/meta/v1"
-import _ "github.com/ericchiang/k8s/runtime"
-import _ "github.com/ericchiang/k8s/runtime/schema"
-import _ "github.com/ericchiang/k8s/util/intstr"
+import _ "github.com/gopro/ext-k8s/apis/core/v1"
+import _ "github.com/gopro/ext-k8s/apis/apiextensions/v1beta1"
+import k8s_io_apimachinery_pkg_apis_meta_v1 "github.com/gopro/ext-k8s/apis/meta/v1"
+import _ "github.com/gopro/ext-k8s/runtime"
+import _ "github.com/gopro/ext-k8s/runtime/schema"
+import _ "github.com/gopro/ext-k8s/util/intstr"
 
 import io "io"
 

@@ -16,8 +16,8 @@ package versioned
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import k8s_io_kubernetes_pkg_runtime "github.com/ericchiang/k8s/runtime"
-import _ "github.com/ericchiang/k8s/util/intstr"
+import k8s_io_kubernetes_pkg_runtime "github.com/gopro/ext-k8s/runtime"
+import _ "github.com/gopro/ext-k8s/util/intstr"
 
 import io "io"
 
@@ -383,7 +383,7 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("github.com/ericchiang/k8s/watch/versioned/generated.proto", fileDescriptorGenerated)
+	proto.RegisterFile("github.com/gopro/ext-k8s/watch/versioned/generated.proto", fileDescriptorGenerated)
 }
 
 var fileDescriptorGenerated = []byte{
