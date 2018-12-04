@@ -30,6 +30,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -38,6 +39,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/exec"
 	"time"
 
 	"golang.org/x/net/http2"
@@ -289,6 +291,36 @@ func newClient(cluster Cluster, user AuthInfo, namespace string) (*Client, error
 			return nil, fmt.Errorf("load token file: %v", err)
 		}
 		token = string(data)
+	}
+	if user.Exec.Command != "" {
+		type K8sExecStatus struct {
+			Token string `json:"token"`
+		}
+
+		type K8sExecCredential struct {
+			Kind string `json:"kind"`
+			ApiVersion string `json:"apiVersion"`
+			Spec string `json:"spec"`
+			Status K8sExecStatus `json:"status"`
+		}
+
+		cmd := exec.Command(user.Exec.Command)
+		cmd.Args = append(cmd.Args, user.Exec.Args...)
+		var envVars []string
+		for _, envVar := range user.Exec.Envs {
+			envVars = append(envVars, envVar.Name + "=" + envVar.Value)
+		}
+		cmd.Env = append(os.Environ(), envVars...)
+
+		var out bytes.Buffer
+		cmd.Stdout = &out
+		err := cmd.Run()
+		if err != nil {
+			fmt.Println(err)
+		}
+		var tokenCredential K8sExecCredential
+		json.Unmarshal(out.Bytes(), &tokenCredential)
+		token = tokenCredential.Status.Token
 	}
 
 	transport := &http.Transport{

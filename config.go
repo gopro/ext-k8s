@@ -115,6 +115,21 @@ type AuthInfo struct {
 	// Extensions holds additional information. This is useful for extenders so that reads and writes don't clobber unknown fields
 	// +optional
 	Extensions []NamedExtension `json:"extensions,omitempty" yaml:"extensions,omitempty"`
+	// Exec holds external authentication mecanism - aws authenticator call params
+	// +optional
+	Exec ExecConfig `json:"exec,omitempty" yaml:"exec,omitempty"`
+}
+
+type ExecConfig struct {
+	APIVersion string `json:"apiVersion,omitempty" yaml:"apiVersion,omitempty"`
+	Args []string `json:"args,omitempty" yaml:"args,omitempty"`
+	Command string `json:"command" yaml:"command"`
+	Envs []NamedEnv `json:"env,omitempty" yaml:"env,omitempty"`
+}
+
+type NamedEnv struct {
+	Name string `json:"name" yaml:"name"`
+	Value string `json:"value" yaml:"value"`
 }
 
 // Context is a tuple of references to a cluster (how do I communicate with a kubernetes cluster), a user (how do I identify myself), and a namespace (what subset of resources do I want to work with)
